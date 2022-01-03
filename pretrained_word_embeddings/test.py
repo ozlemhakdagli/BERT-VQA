@@ -55,21 +55,22 @@ def model_metric(predictions, truths):
     return (correct_val / total) * 100
 
 
-def chunks(img, token, n):
-    for i in tqdm(range(0, len(img), n)):
-        yield img[i:i + n], token[i, i + n]
+# def chunks(img, token, n):
+#     for i in tqdm(range(0, len(img), n)):
+#         yield img[i:i + n], token[i, i + n]
 
 
+# for i in range(0, len(image_weights), 512):
+# [image_weights[i:i + n]
 # for img, ques in tqdm(zip(image_weights, question_tokens)):
-def predict_answers(image_weights, question_tokens, model, labelencoder, n=512):
+def predict_answers(image_weights, question_tokens, model, labelencoder):
     """
     Prediction function
     """
 
     predictions = []
-    for i in range(0, len(image_weights), 512):
-        # print(np.asarray(image_weights).shape)
-        preds = model.predict([image_weights[i:i + n], question_tokens[i, i + n]])
+    for img, token in tqdm(zip(image_weights, question_tokens)):
+        preds = model.predict([img, token])
         predictions.extend(preds)
 
     y_classes = tf.argmax(predictions, axis=1, output_type=tf.int32)
@@ -90,6 +91,9 @@ def main():
 
     pred_ready_img = [img.reshape(1, -1) for img in image_list_test]
     pred_ready_tokens = [ques.reshape(1, -1) for ques in question_list_test]
+
+    pred_ready_img = pred_ready_img[0:30000]
+    pred_ready_tokens = pred_ready_tokens[0:30000]
 
     predictions = predict_answers(pred_ready_img, pred_ready_tokens, model, label_encoder)
     score = model_metric(predictions, answers_list_test)
