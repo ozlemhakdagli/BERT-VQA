@@ -189,7 +189,7 @@ def get_answers_matrix(answers, encoder):
 def load_img_features(filtered_img_list):
     img_features = []
     for img_id in filtered_img_list:
-        img_features.append(np.load(file=args.processed_path + 'features_xception/' + img_id + '.npy'))
+        img_features.append(np.load(file=args.processed_path + 'features_resnet/' + img_id + '.npy'))
 
     return img_features
 
@@ -200,7 +200,9 @@ def main():
     num_unk = args.num_unk
     embedding_type = args.embedding_type
     TRAIN_INDEX = None
+    VAL_MERGED_INDEX = None
     VAL_INDEX = None
+    TEST_INDEX = None
 
     """ Extracts information from json files and """
     data_train = process_question_annotation('train2014')
@@ -264,16 +266,10 @@ def main():
         pickle.dump((image_list_vl, question_vl, answer_vl), f, protocol=pickle.HIGHEST_PROTOCOL)
 
     """ Test dataset creation """
-    shuffle_split_test = StratifiedShuffleSplit(n_splits=1, test_size=0.40, random_state=123)
-    for train_index, val_index in shuffle_split_test.split(filtered_img_id_list, filtered_answer_list):
-        VAL_INDEX = val_index
-
-    image_list_test, question_list_test, answers_list_test = np.array(img_features)[VAL_INDEX.astype(int)], \
-                                                             np.array(token_list)[VAL_INDEX.astype(int)], \
-                                                             np.array(filtered_answers_list)[VAL_INDEX.astype(int)]
+    answers_list_test = np.array(filtered_answers_list)[VAL_INDEX.astype(int)]
 
     with open(args.processed_path + 'test_data.pkl', 'wb') as f:
-        pickle.dump((image_list_test, question_list_test, answers_list_test), f, protocol=pickle.HIGHEST_PROTOCOL)
+        pickle.dump((image_list_vl, question_vl, answers_list_test), f, protocol=pickle.HIGHEST_PROTOCOL)
 
 
 if __name__ == "__main__":
