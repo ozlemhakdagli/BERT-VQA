@@ -2,7 +2,6 @@ import argparse
 import os
 import pickle
 
-import numpy as np
 import plac
 import tensorflow as tf
 from tensorflow.keras.models import load_model
@@ -86,14 +85,15 @@ def main():
         label_encoder = pickle.load(f)
 
     print("Loading NLI model")
-    model = load_model(args.results_path + "model_lstm")
+    model = load_model(args.results_path + "model")
     print("NLI model loaded")
 
     pred_ready_img = [img.reshape(1, -1) for img in image_list_test]
     pred_ready_tokens = [ques.reshape(1, -1) for ques in question_list_test]
 
-    pred_ready_img = pred_ready_img[0:30000]
-    pred_ready_tokens = pred_ready_tokens[0:30000]
+    print("total test samples", len(pred_ready_img))
+    # pred_ready_img = pred_ready_img[0:30000]
+    # pred_ready_tokens = pred_ready_tokens[0:30000]
 
     predictions = predict_answers(pred_ready_img, pred_ready_tokens, model, label_encoder)
     score = model_metric(predictions, answers_list_test)

@@ -5,14 +5,14 @@ from tensorflow.keras.optimizers import Adam
 
 
 def build_model(max_seq_len, vectors, learning_rate):
-    image_input = Input(shape=(2048,), name='Image_Input')
+    image_input = Input(shape=(1536,), name='Image_Input')
     image_feat = Dense(1024, activation="tanh", name='image_dense')(image_input)
 
     ques_input = Input(shape=(max_seq_len,), dtype='int32', name='Question_Input')
     ques_feat_w = embedding_layer(vectors=vectors, max_length=max_seq_len)(ques_input)
-    LSTM1 = Bidirectional(GRU(512, return_sequences=True))(ques_feat_w)
+    LSTM1 = Bidirectional(LSTM(512, return_sequences=True))(ques_feat_w)
     LSTM1 = Dropout(0.5)(LSTM1)
-    LSTM1 = Bidirectional(GRU(512, return_sequences=False))(LSTM1)
+    LSTM1 = Bidirectional(LSTM(512, return_sequences=False))(LSTM1)
     LSTM1 = Dropout(0.5)(LSTM1)
     Ques_D = Dense(1024, activation='tanh')(LSTM1)
     Ques_D = Dropout(0.5)(Ques_D)

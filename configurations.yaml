@@ -19,7 +19,7 @@ nr_unk: 50
 max_length: 14
 max_answer: 1000
 img_batch_size : 512
-embedding_type : 'glove'
+embedding_type : 'fasttext'
 buffer_size : 5000
 epochs : 256
 hidden_dimension : 512

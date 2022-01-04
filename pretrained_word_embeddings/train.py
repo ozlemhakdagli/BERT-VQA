@@ -2,9 +2,10 @@ import argparse
 import os
 import pickle
 
+import matplotlib.pyplot as plt
 import plac
 from tensorflow.keras.callbacks import LearningRateScheduler, EarlyStopping
-import matplotlib.pyplot as plt
+
 from model import build_model
 from utilities.utils import load_configurations, set_memory_growth
 
@@ -65,7 +66,7 @@ def main():
 
     lr_scheduler = LearningRateScheduler(decay_schedule)
 
-    es = EarlyStopping(monitor='val_loss', mode='min', verbose=1,
+    es = EarlyStopping(monitor='val_accuracy', mode='max', verbose=1,
                        patience=3, restore_best_weights=True)
 
     model = build_model(max_seq_len=max_seq_len,
@@ -80,7 +81,7 @@ def main():
                         epochs=EPOCHS,
                         batch_size=BATCH_SIZE,
                         verbose=1,
-                        callbacks=[lr_scheduler,es])
+                        callbacks=[lr_scheduler, es])
 
     print("Saving to", args.results_path)
     model.save(args.results_path + "model", save_format="h5")
