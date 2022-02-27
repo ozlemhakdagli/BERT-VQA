@@ -1,17 +1,17 @@
 ---
 # Paths
-main_path: "/media/ulgen/Samsung/VQA/"
-vqa_dataset_path: "/media/ulgen/Samsung/VQA/vqa_dataset/"
-vqa_processed_data_path : "/media/ulgen/Samsung/VQA/processed_data/"
-results: "/media/ulgen/Samsung/VQA/results/"
+main_path: "/media/ozlem/Depo/VQA"
+vqa_dataset_path: "/media/ozlem/Depo/VQA/vqa_dataset/"
+vqa_processed_data_path : "/media/ozlem/Depo/VQA/processed_data/"
+results: "/media/ozlem/Depo/VQA/results/"
 
 
 # Transformers Paths
-fasttext: "/media/ulgen/Samsung/VQA/embeddings/fasttext/"
-word2vec: "/media/ulgen/Samsung/VQA/embeddings/word2vec/"
-glove: "/media/ulgen/Samsung/VQA/embeddings/glove/"
-ontonotes5: "/media/ulgen/Samsung/VQA/embeddings/ontonotes5/"
-bert_tf_hub_contextualized: "/media/ulgen/Samsung/VQA/embeddings/bert_tf_hub"
+fasttext: "/media/ozlem/Depo/VQA/embeddings/fasttext/"
+word2vec: "/media/ozlem/Depo/VQA/embeddings/word2vec/"
+glove: "/media/ozlem/Depo/VQA/embeddings/glove/"
+ontonotes5: "/media/ozlem/Depo/VQA/embeddings/ontonotes5/"
+bert_tf_hub_contextualized: "/media/ozlem/Depo/VQA/embeddings/bert_tf_hub"
 
 
 # Parameters

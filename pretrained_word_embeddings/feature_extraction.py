@@ -39,7 +39,7 @@ parser.add_argument("--num_unk", type=str, default=configs['nr_unk'],
                     help="number of unknown words to be randomly filled")
 
 parser.add_argument("--max_len_sequences", type=str, default=configs['max_length'],
-                    help="Maximum length threshold for a sequence ")
+                    help="Maximum length threshold for a sequence")
 args = parser.parse_args()
 
 
@@ -189,7 +189,7 @@ def get_answers_matrix(answers, encoder):
 def load_img_features(filtered_img_list):
     img_features = []
     for img_id in filtered_img_list:
-        img_features.append(np.load(file=args.processed_path + 'features_resnet/' + img_id + '.npy'))
+        img_features.append(np.load(file=args.processed_path + 'features_xception/' + img_id + '.npy'))
 
     return img_features
 
@@ -200,9 +200,7 @@ def main():
     num_unk = args.num_unk
     embedding_type = args.embedding_type
     TRAIN_INDEX = None
-    VAL_MERGED_INDEX = None
     VAL_INDEX = None
-    TEST_INDEX = None
 
     """ Extracts information from json files and """
     data_train = process_question_annotation('train2014')
@@ -244,8 +242,8 @@ def main():
     """read image features from file"""
     img_features = load_img_features(filtered_img_list=filtered_img_id_list)
 
-    """ split the data 90-10 for train and validation"""
-    shuffle_split = StratifiedShuffleSplit(n_splits=1, test_size=0.10, random_state=42)
+    """ split the data 65-35 for train and validation"""
+    shuffle_split = StratifiedShuffleSplit(n_splits=1, test_size=0.35, random_state=42)
     for train_index, val_index in shuffle_split.split(filtered_img_id_list, filtered_answer_list):
         TRAIN_INDEX = train_index
         VAL_INDEX = val_index

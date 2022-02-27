@@ -32,7 +32,7 @@ def load_configurations():
     settings are handled in configuration yaml file. This enables single centralized control over parameters and paths.
     :return: returns configurations.
     """
-    with open('/home/ulgen/Documents/PycharmProjects/BERT-VQA/configurations.yaml', 'r') as stream:
+    with open('/home/ozlem/Documents/pycharmProjects/BERT-VQA/configurations.yaml', 'r') as stream:
         try:
             configurations = (yaml.safe_load(stream))
         except yaml.YAMLError as exc:

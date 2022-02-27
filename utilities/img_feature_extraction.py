@@ -9,9 +9,8 @@ from tensorflow.keras.applications import Xception
 from tensorflow.keras.applications.xception import preprocess_input as xception_preprocess_input
 from tensorflow.keras.layers import Input
 from tensorflow.keras.preprocessing import image
-from tensorflow.python.keras.applications.inception_resnet_v2 import InceptionResNetV2, \
-    preprocess_input as resnet_preprocess_input
-
+from tensorflow.python.keras.applications.inception_resnet_v2 import InceptionResNetV2
+from tensorflow.python.keras.applications.inception_resnet_v2 import preprocess_input as resnet_preprocess_input
 from utilities.utils import load_configurations, set_memory_growth
 
 set_memory_growth()
@@ -72,7 +71,6 @@ def image_feature_extractor_xception(target_path, image_list, img_batch_size, su
         # features = tf.reshape(features, (features.shape[0], features.shape[1], -1))  # (BATCH_SIZE, 512, 49)
         # features = tf.transpose(features, perm=[0, 2, 1])  # (BATCH_SIZE, 49, 512)
 
-        # loop over the batch to save them locally
         for id, feat in zip(batchIds, features):
             np.save(os.path.join(target_path, subset + '_' + id), feat)
 
@@ -120,26 +118,31 @@ def image_feature_extractor_resnet_v2(target_path, image_list, img_batch_size, s
         # features = tf.reshape(features, (features.shape[0], features.shape[1], -1))  # (BATCH_SIZE, 512, 49)
         # features = tf.transpose(features, perm=[0, 2, 1])  # (BATCH_SIZE, 49, 512)
 
-        # loop over the batch to save them locally
         for id, feat in zip(batchIds, features):
             np.save(os.path.join(target_path, subset + '_' + id), feat)
 
 
 def main():
-    subset = str('val2014')
+    case = 'xception'
+    subset = str('train2014')
     image_list = os.listdir(args.vqa_datasets + subset)
     img_batch_size = 512
-    target_path = args.processed_path + 'features_resnet'
+    target_path = args.processed_path + 'features_xception'
 
-    # image_feature_extractor_xception(target_path=target_path,
-    #                                  image_list=image_list,
-    #                                  img_batch_size=img_batch_size,
-    #                                  subset=subset)
+    if case == 'xception':
+        image_feature_extractor_xception(target_path=target_path,
+                                         image_list=image_list,
+                                         img_batch_size=img_batch_size,
+                                         subset=subset)
 
-    image_feature_extractor_resnet_v2(target_path=target_path,
-                                      image_list=image_list,
-                                      img_batch_size=img_batch_size,
-                                      subset=subset)
+    elif case == 'resnet_v2':
+        image_feature_extractor_resnet_v2(target_path=target_path,
+                                          image_list=image_list,
+                                          img_batch_size=img_batch_size,
+                                          subset=subset)
+
+    else:
+        print("None of the cases are viable")
 
 
 if __name__ == "__main__":
