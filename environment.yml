@@ -1,0 +1,18 @@
+# Create with:  conda env create -f environment.yml   (run from the repository root)
+name: vqa-lab
+channels:
+  - defaults
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+      - torch==2.13.0
+      - torchvision==0.28.0
+      - timm==1.0.30
+      - transformers==5.19.0   # vllm 0.32.0 needs transformers<5.20.0
+      - gensim==4.4.0
+      - numpy==2.3.5   # vllm pulls numba, which needs numpy<2.5
+      - pandas==3.0.6
+      - vllm==0.32.0
+      - pillow
+      - -e .[dev,notebooks]

@@ -1,0 +1,95 @@
+# Configuration of vqa_lab: data locations and the encoder registries of the benchmarks. One encoder per line; `name`
+# (the timm / torchvision / Hugging Face name) defaults to `key`, which is also the feature-cache folder name.
+
+# Paths are relative to the repository root (or absolute). Override the root with VQA_LAB_ROOT.
+paths:
+  zip_dir: data/zip_file          # original downloads, read-only
+  raw_dir: data/raw_files         # extracted zips
+  processed_dir: data/processed   # derived tables and feature caches
+  artifacts_dir: artifacts        # runs, predictions, registry, results
+
+classical:   # notebook 03 (1,000-answer list)
+  # Frozen CNN image encoders: every entry was run in the benchmark. Names are timm pretrained names or torchvision:<arch>.
+  image:
+    - {key: legacy_xception.tf_in1k, family: Xception, tier: 1, note: the original project backbone (reference)}
+    - {key: resnet152.tv_in1k, family: ResNet, tier: 1}
+    - {key: resnet50x4_clip.openai, family: CLIP, tier: 1}
+    - {key: vgg16.tv_in1k, family: VGG, tier: 1}
+    - {key: vgg19.tv_in1k, family: VGG, tier: 1}
+    - {key: inception_v3.tv_in1k, family: Inception, tier: 1}
+    - {key: inception_v4.tf_in1k, family: Inception, tier: 1}
+    - {key: inception_resnet_v2.tf_in1k, family: Inception, tier: 1}
+    - {key: resnet18.tv_in1k, family: ResNet, tier: 1}
+    - {key: resnet34.tv_in1k, family: ResNet, tier: 1}
+    - {key: resnet50.tv_in1k, family: ResNet, tier: 1}
+    - {key: resnet101.tv_in1k, family: ResNet, tier: 1}
+    - {key: wide_resnet50_2.tv_in1k, family: ResNet, tier: 1}
+    - {key: wide_resnet101_2.tv_in1k, family: ResNet, tier: 1}
+    - {key: resnext50_32x4d.tv_in1k, family: ResNeXt, tier: 1}
+    - {key: resnext101_32x8d.tv_in1k, family: ResNeXt, tier: 1}
+    - {key: senet154.gluon_in1k, family: SENet, tier: 1}
+    - {key: seresnext101_32x8d.ah_in1k, family: SENet, tier: 1}
+    - {key: densenet121.tv_in1k, family: DenseNet, tier: 1}
+    - {key: densenet161.tv_in1k, family: DenseNet, tier: 1}
+    - {key: densenet201.tv_in1k, family: DenseNet, tier: 1}
+    - {key: mobilenetv2_100.ra_in1k, family: MobileNet, tier: 1}
+    - {key: mobilenetv3_large_100.ra_in1k, family: MobileNet, tier: 1}
+    - {key: efficientnet_b0.ra_in1k, family: EfficientNet, tier: 1}
+    - {key: efficientnet_b3.ra2_in1k, family: EfficientNet, tier: 1}
+    - {key: efficientnet_b5.sw_in12k_ft_in1k, family: EfficientNet, tier: 1}
+    - {key: tf_efficientnet_b7.ns_jft_in1k, family: EfficientNet, tier: 1}
+    - {key: tf_efficientnetv2_l.in21k_ft_in1k, family: EfficientNetV2, tier: 1}
+    - {key: regnety_040.ra3_in1k, family: RegNet, tier: 1}
+    - {key: regnety_160.sw_in12k_ft_in1k, family: RegNet, tier: 1}
+    - {key: convnext_tiny.fb_in1k, family: ConvNeXt, tier: 1}
+    - {key: convnext_small.fb_in22k_ft_in1k, family: ConvNeXt, tier: 1}
+    - {key: convnext_base.fb_in22k_ft_in1k, family: ConvNeXt, tier: 1}
+    - {key: convnext_large.fb_in22k_ft_in1k, family: ConvNeXt, tier: 1}
+    - {key: convnextv2_base.fcmae_ft_in22k_in1k, family: ConvNeXt-V2, tier: 1}
+    - {key: dm_nfnet_f0.dm_in1k, family: NFNet, tier: 1}
+    - {key: resnetv2_50x1_bit.goog_in21k_ft_in1k, family: BiT, tier: 1}
+    - {key: resnetv2_101x1_bit.goog_in21k_ft_in1k, family: BiT, tier: 1}
+    - {key: resnetv2_152x2_bit.goog_in21k_ft_in1k, family: BiT, tier: 1}
+    - {key: nasnetalarge.tf_in1k, family: NAS, tier: 1}
+    - {key: pnasnet5large.tf_in1k, family: NAS, tier: 1}
+    - {key: resnext101_32x8d.fb_wsl_ig1b_ft_in1k, family: WSL, tier: 1}
+    - {key: resnext101_32x16d.fb_wsl_ig1b_ft_in1k, family: WSL, tier: 1}
+    - {key: resnet50.fb_swsl_ig1b_ft_in1k, family: WSL, tier: 1}
+    - {key: resnet50.fb_ssl_yfcc100m_ft_in1k, family: WSL, tier: 1}
+    - {key: resnet50_clip.openai, family: CLIP, tier: 1}
+    - {key: resnet101_clip.openai, family: CLIP, tier: 1}
+    - {key: resnet50x16_clip.openai, family: CLIP, tier: 1}
+    - {key: resnet50x64_clip.openai, family: CLIP, tier: 1}
+    - {key: convnext_base.clip_laion2b, family: CLIP, tier: 1}
+    - {key: tv_alexnet, name: 'torchvision:alexnet', family: AlexNet, tier: 1, note: torchvision ImageNet weights}
+    - {key: tv_googlenet, name: 'torchvision:googlenet', family: GoogLeNet, tier: 1, note: torchvision ImageNet weights}
+    - {key: tv_squeezenet1_1, name: 'torchvision:squeezenet1_1', family: SqueezeNet, tier: 1, note: torchvision ImageNet weights}
+    - {key: tv_shufflenet_v2_x1_0, name: 'torchvision:shufflenet_v2_x1_0', family: ShuffleNet, tier: 1, note: torchvision ImageNet weights}
+  # Question encoders: every entry was run in the benchmark.
+  text:
+    - {key: random, name: random vectors (control), kind: static, tier: 1}
+    - {key: word2vec, name: word2vec GoogleNews-300, kind: static, tier: 1}
+    - {key: glove, name: GloVe 840B-300d, kind: static, tier: 1}
+    - {key: fasttext, name: fastText wiki-news-300d-1M, kind: static, tier: 1}
+    - {key: bert, name: bert-base-uncased, kind: contextual, tier: 1}
+    - {key: bert_large, name: bert-large-uncased, kind: contextual, tier: 1}
+
+modern:   # notebook 04 (3,129-answer list)
+  # name: "hf:<repository>" (transformers, weights in data/raw_files/models/<repository>) or a timm name.
+  # tier 1 = the grid (every question encoder, both heads); tier 2 = bridge cells only (notebook 04 BRIDGE).
+  image:
+    - {key: siglip2_so400m, name: 'hf:google/siglip2-so400m-patch14-384', family: SigLIP 2, tier: 1}
+    - {key: pe_lang_l, name: vit_pe_lang_large_patch14_448.fb, family: Perception Encoder, tier: 1}
+    - {key: cradio_v4_so400m, name: 'hf:nvidia/C-RADIOv4-SO400M', family: C-RADIO, tier: 1}
+    - {key: clip_l14_336, name: 'hf:openai/clip-vit-large-patch14-336', family: CLIP ViT, tier: 1}
+    - {key: qwen3vl_emb_2b, name: 'hf:Qwen/Qwen3-VL-Embedding-2B', family: Qwen3-VL-Embedding, tier: 1}
+    - {key: convnext_base.clip_laion2b, family: 'CLIP ConvNeXt (classical winner, bridge)', tier: 2}
+  # Sentence vector = the model's own pooled, L2-normalised embedding
+  # (text.SENTENCE_ARMS); token states = the model's last-layer states through the BiLSTM; bert = the classical token arm.
+  text:
+    - {key: qwen3_emb_0.6b, name: Qwen/Qwen3-Embedding-0.6B, kind: sentence vector, tier: 1}
+    - {key: qwen3_emb_4b, name: Qwen/Qwen3-Embedding-4B, kind: sentence vector, tier: 1}
+    - {key: qwen3vl_emb_2b_text, name: Qwen/Qwen3-VL-Embedding-2B (text side), kind: sentence vector, tier: 1}
+    - {key: bert, name: bert-base-uncased, kind: contextual tokens (classical bridge), tier: 1}
+    - {key: qwen3_emb_0.6b_tokens, name: Qwen/Qwen3-Embedding-0.6B (token states), kind: 'token states, standardised (BiLSTM)', tier: 2}
+    - {key: qwen3_emb_4b_tokens, name: Qwen/Qwen3-Embedding-4B (token states), kind: 'token states, standardised (BiLSTM)', tier: 2}
